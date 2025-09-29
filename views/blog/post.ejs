@@ -21,7 +21,11 @@
             <div class="col-lg-8">
                 <article class="card shadow-sm">
                     <% if (blog.featuredImage) { %>
-                        <img src="<%= blog.featuredImage %>" class="card-img-top" alt="<%= blog.title %>" style="height: 400px; object-fit: cover;">
+                        <img src="<%= blog.featuredImage.startsWith('http') 
+                            ? blog.featuredImage 
+                            : (process.env.SITE_URL ? process.env.SITE_URL : '') + '/' + blog.featuredImage.replace(/^\/?/, '') %>"
+                             class="card-img-top"
+                             alt="<%= blog.title %>" style="height: 400px; object-fit: cover;">
                     <% } %>
                     <div class="card-body p-4">
                         <div class="mb-3">
@@ -53,7 +57,9 @@
                         <% } %>
 
                         <div class="blog-content">
-                            <%= blog.content.replace(/\n/g, '<br>') %>
+                            <% blog.content.split(/\n\s*\n/).forEach(paragraph => { %>
+                                <p><%= paragraph.trim() %></p>
+                            <% }) %>
                         </div>
 
                         <% if (blog.tags && blog.tags.length > 0) { %>
@@ -164,11 +170,6 @@
 .blog-content {
     line-height: 1.8;
     font-size: 1.1rem;
-}
-
-.blog-content h1, .blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
 }
 
 .blog-content p {

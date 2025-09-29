@@ -18,7 +18,7 @@ async function createAdmin() {
         // Create admin user
         const adminData = {
             username: 'admin',
-            email: 'admin@atcccanada.ca', // Change this to your email
+            email: 'vivianglenpb@gmail.com', // Change this to your email
             password: 'admin123', // Change this to a secure password
             firstName: 'Admin',
             lastName: 'User',

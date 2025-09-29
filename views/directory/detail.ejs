@@ -102,22 +102,21 @@
                                         <% 
                                         const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
                                         const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                                        const defaultOpen = '09:00';
+                                        const defaultClose = '17:00';
                                         %>
                                         <% days.forEach((day, index) => { %>
-                                            <% if (business.businessHours[day]) { %>
-                                                <tr>
-                                                    <td><strong><%= dayNames[index] %></strong></td>
-                                                    <td>
-                                                        <% if (business.businessHours[day].closed) { %>
-                                                            Closed
-                                                        <% } else if (business.businessHours[day].open && business.businessHours[day].close) { %>
-                                                            <%= business.businessHours[day].open %> - <%= business.businessHours[day].close %>
-                                                        <% } else { %>
-                                                            Hours not specified
-                                                        <% } %>
-                                                    </td>
-                                                </tr>
-                                            <% } %>
+                                            <% const hours = business.businessHours[day] || {}; %>
+                                            <tr>
+                                                <td><strong><%= dayNames[index] %></strong></td>
+                                                <td>
+                                                    <% if (hours.closed) { %>
+                                                        Closed
+                                                    <% } else { %>
+                                                        <%= hours.open || defaultOpen %> - <%= hours.close || defaultClose %>
+                                                    <% } %>
+                                                </td>
+                                            </tr>
                                         <% }) %>
                                     </table>
                                 </div>
